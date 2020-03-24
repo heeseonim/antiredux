@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Flex, { FlexItem } from "styled-flex-component";
 import FontAwesome from "react-fontawesome";
+import Store from "store";
 
 const Notification = styled.div`
   background-color: white;
@@ -14,11 +15,9 @@ const Notification = styled.div`
   box-sizing: border-box;
   border: 2px solid ${props => (props.seen ? "transparent" : "#f1c40f")};
 `;
-
 const Title = styled.span`
   font-weight: 600;
 `;
-
 const Button = styled.button`
   height: 40px;
   width: 40px;
@@ -50,11 +49,12 @@ const Button = styled.button`
     transform: translateY(1px);
   }
 `;
-
 const NotificationPresenter = ({ id, text, seen }) => (
   <Notification seen={seen}>
     <Flex alignCenter justifyBetween>
-      <Title>{text}</Title>
+      <Title>
+        <Store.Consumer>{store => store.message}</Store.Consumer>
+      </Title>
       <FlexItem>
         <Fragment>
           <Button success seen={seen} onClick={() => {}}>
@@ -68,11 +68,9 @@ const NotificationPresenter = ({ id, text, seen }) => (
     </Flex>
   </Notification>
 );
-
 NotificationPresenter.propTypes = {
   text: PropTypes.string.isRequired,
   seen: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired
 };
-
 export default NotificationPresenter;
