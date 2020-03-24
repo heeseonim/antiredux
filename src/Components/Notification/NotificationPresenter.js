@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Flex, { FlexItem } from "styled-flex-component";
 import FontAwesome from "react-fontawesome";
 import Store from "store";
-
 const Notification = styled.div`
   background-color: white;
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
@@ -57,14 +56,24 @@ const NotificationPresenter = ({ id, text, seen }) => (
         <Fragment>
           <Store.Consumer>
             {store => (
-              <Button success seen={seen} onClick={store.changeMessage}>
-                <FontAwesome name="check" />
-              </Button>
+              <Fragment>
+                <Button
+                  success
+                  seen={seen}
+                  onClick={() => store.seeNotification(id)}
+                >
+                  <FontAwesome name="check" />
+                </Button>
+                <Button
+                  danger
+                  seen={seen}
+                  onClick={() => store.deleteNotification(id)}
+                >
+                  <FontAwesome name="times" />
+                </Button>
+              </Fragment>
             )}
           </Store.Consumer>
-          <Button danger seen={seen} onClick={() => {}}>
-            <FontAwesome name="times" />
-          </Button>
         </Fragment>
       </FlexItem>
     </Flex>
